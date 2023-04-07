@@ -47,7 +47,7 @@ jobs:
         id: pages
         uses: actions/configure-pages@v3
       - name: setup-yq
-        uses: chrisdickinson/setup-yq@latest
+        uses: mikefarah/yq@v4.33.2
       - name: Change Download
         run: |
           yq -i '.params.hero.button.name = "Install v'{$SOURCE_TAG}'"' config.yaml
