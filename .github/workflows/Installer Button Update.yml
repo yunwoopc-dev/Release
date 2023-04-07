@@ -50,6 +50,8 @@ jobs:
           SOURCE_TAG: ${{ steps.branch_name.outputs.SOURCE_TAG }}
       - name: Push Config
         run: |
+          git config --global user.email "actions@github.io"
+          git config --global user.name "GitHub Actions"
           git add config.yaml
           git commit -m "config 수정"
           git push
