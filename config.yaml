@@ -172,7 +172,7 @@ params:
     socialLinks:
       fontAwesomeIcons:
         - icon: fab fa-github
-          url: https://example.com
+          url: https://github.com/yunwoopc-dev
           #- icon: fab fa-twitter
   #url: https://example.com
 
