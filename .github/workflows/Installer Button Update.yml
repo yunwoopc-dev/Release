@@ -5,6 +5,8 @@ on:
   # Runs on pushes targeting the default branch
   push:
     tags: "*"
+    
+  workflow_dispatch:
 
 # Default to bash
 defaults:
