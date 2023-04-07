@@ -1,64 +1,59 @@
+# Site settings
+title: Jekyll Doc Theme
+email: your-email@domain.com
+description: >
+  Jekyll Template for Project Websites
+  providing documentation and blog post pages.
+lang: en-US
 
-# Setup
-title:               DevAid
-email:               example@gmail.com
-tagline:             Free Jekyll theme made for developers
-url:                 "" # insert your site's URL
-baseurl:             ""
+baseurl: "/jekyll-doc-theme" # the subpath of your site, e.g. /blog/
+url: https://aksakalli.github.io/jekyll-doc-theme # the base hostname & protocol for your site
+git_address: https://github.com/aksakalli/jekyll-doc-theme
+git_edit_address: https://github.com/aksakalli/jekyll-doc-theme/blob/gh-pages
 
-# About/contact
-author: # you can edit these to be your personal details
-  name:              Xiaoying Riley
-  url:               https://twitter.com/3rdwave_themes
-  email:
-
-# Google services
-google_verification:
-# Use either direct GA implementation or set up GTM account
-# - using both will skew your data (leave blank to not use at all)
-google_analytics:
-google_tag_manager:
-# Bing services
-bing_verification:
-
-# Social
-github_username: thundergolfer
-twitter_username: 3rdwave_themes
-instagram_username: kevin/
-facebook: 3rdwavethemes/
-linkedin_username: xiaoying
-dribbble_username: Xiaoying
-
-# Custom vars
-version:             1.0.1
-github:
-  repo:              https://github.com/kevit/devaid-jekyll-theme
-
-# Gems - Dependencies for this theme
-gems:
-  # None currently
+# theme options from https://bootswatch.com/3/
+# comment out this to use default Bootstrap
+bootwatch: paper # cerulean cosmo custom cyborg darkly flatly journal lumen readable sandstone simplex slate solar spacelab superhero united yeti
 
 # Build settings
-markdown:     kramdown
-permalink:    pretty
+markdown: kramdown
+highlighter: rouge
+# Plugins (previously gems:)
+plugins:
+  - jekyll-feed
+  - jekyll-redirect-from
+  - jekyll-seo-tag
+  - jekyll-sitemap
 
-widgets:
-  - title: About
-    url: about
-    archor: true
-  - title: Features
-    url: features
-    archor: true
-  - title: Docs
-    url: docs
-    archor: true
-  - title: License
-    url: license
-    archor: true
-  - title: Contact
-    url: contact
-    archor: true
-  - title: Blog
-    url: blog
-  - title: Page
-    url: page
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - .idea/
+  - .gitignore
+  - README.md
+  - vendor
+timezone: Europe/Berlin
+defaults:
+- scope:
+    path: _posts
+    type: posts
+  values:
+    layout: post
+    sectionid: blog
+
+- scope:
+    path: _docs
+    type: docs
+  values:
+    layout: docs
+    sectionid: docs
+    seo:
+      type: "WebPage"
+
+collections:
+  docs:
+    permalink: /:collection/:path/
+    output: true
+  posts:
+    permalink: /blog/:year/:month/:day/:title/
+    output: true
