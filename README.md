@@ -1,161 +1,84 @@
-# Jekyll Doc Theme
+# Hugo Profile | [Wiki Page](https://github.com/gurusabarish/hugo-profile/wiki)
 
-Go to [the website](https://aksakalli.github.io/jekyll-doc-theme/) for detailed information and demo.
+[![Twitter](https://img.shields.io/twitter/url?label=Tweet&style=social&url=https%3A%2F%2Fgithub.com%2Fgurusabarish%2Fhugo-profile)](https://twitter.com/intent/tweet?text=Wow:&url=https%3A%2F%2Fgithub.com%2Fgurusabarish%2Fhugo-profile) [![GitHub forks](https://img.shields.io/github/forks/gurusabarish/hugo-profile?style=plastic)](https://github.com/gurusabarish/hugo-profile/network) [![GitHub stars](https://img.shields.io/github/stars/gurusabarish/hugo-profile?style=plastic)](https://github.com/gurusabarish/hugo-profile/stargazers)
 
-## Running locally
+[![Netlify Status](https://api.netlify.com/api/v1/badges/5c1dcb34-cada-4c80-82b7-cfdbdbd7c774/deploy-status)](https://app.netlify.com/sites/hugo-profile/deploys)
+![Latest Release](https://img.shields.io/github/v/release/gurusabarish/hugo-profile?include_prereleases)
+![Last Commit](https://img.shields.io/github/last-commit/gurusabarish/hugo-profile)
+![Open Issues](https://img.shields.io/github/issues/gurusabarish/hugo-profile?color=important)
+![Open Pull Requests](https://img.shields.io/github/issues-pr/gurusabarish/hugo-profile?color=yellowgreen)
+![License](https://img.shields.io/github/license/gurusabarish/hugo-profile)
 
-You need Ruby and gem before starting, then:
+A high performance and mobile first hugo template for personal portfolio and blog
 
-```bash
-# install bundler
-gem install bundler
+- Example Site: [hugo-profile.netlify.app](https://hugo-profile.netlify.app)
 
-# clone the project
-git clone https://github.com/aksakalli/jekyll-doc-theme.git
-cd jekyll-doc-theme
+# Features
+- Fully Responsive
+- Minimalist Design
+- SEO Friendly.
+- Light/Dark/auto
+- Taxonomies
+- [Color customization](https://github.com/gurusabarish/hugo-profile/wiki/Color-Customization)
+- Analytics Support 
+  - [Google Analytics](https://gohugo.io/templates/internal/#google-analytics)
+- Comment Support
+  - [Disqus](https://gohugo.io/content-management/comments/)
+- Integration with [FormSpree](https://formspree.io/) for submitting "Contact me" form
 
-# install dependencies
-bundle install
+Technology used: Bootstrap, fontawesome 
 
-# run jekyll with dependencies
-bundle exec jekyll serve
+# Requirements
+- Hugo Version 0.87.0 or higher
+
+
+# How to use this template
+
+- [Hugo theme](#Hugo-theme)
+- [Direct deployment using netlify](#Direct-deployment-using-netlify)
+
+[For more details](https://github.com/gurusabarish/hugo-profile/wiki)
+## Hugo theme
+
+- Install Hugo and create a site using `hugo new site my-site -f=yaml`
+- Clone this repo inside your themes folder
 ```
-
-### Theme Assets
-
-As of the move to support [Github Pages](https://pages.github.com/) a number of files have been relocated to the `/asset` folder.
-- css/
-- fonts/
-- img/
-- js/
-- 404.html
-- allposts.html
-- search.json
-
-## Docker
-
-Alternatively, you can deploy it using the multi-stage [Dockerfile](Dockerfile)
-that serves files from Nginx for better performance in production.
-
-Build the image for your site's `JEKYLL_BASEURL`:
-
+cd themes
+git clone https://github.com/gurusabarish/hugo-profile.git
 ```
-docker build --build-arg JEKYLL_BASEURL="/your-base/url" -t jekyll-doc-theme .
-```
+- Create config.yaml (you can use `config.toml` too) inside root folder 
+- Setup the configurations in `config.yaml`. [reference](https://github.com/gurusabarish/hugo-profile/blob/master/exampleSite/config.yaml)
+- You should have the mentioned (_inside the config file_) images in static folder to use them.
 
-(or leave it empty for root: `JEKYLL_BASEURL=""`) and serve it:
+For more details: [Hugo's official docs](https://gohugo.io/getting-started/quick-start/), [content management](https://www.mikedane.com/static-site-generators/hugo/content-organization/)
 
-```
-docker run -p 8080:80 jekyll-doc-theme
-```
+## Direct deployment using netlify
 
-## Github Pages
+- Fork this repo or create new repo using `use this template` button and connect repo to netlify.
+- whenever you customize the files exampleSite folder, netlify will automatically deploy your changes.
 
-The theme is also available to [Github Pages](https://pages.github.com/) by making use of the [Remote Theme](https://github.com/benbalter/jekyll-remote-theme) plugin:
+For more details: [host on netlify](https://gohugo.io/hosting-and-deployment/hosting-on-netlify/), [content management](https://www.mikedane.com/static-site-generators/hugo/content-organization/)
 
-**Gemfile**
-```
-# If you want to use GitHub Pages, remove the "gem "jekyll"" above and
-# uncomment the line below. To upgrade, run `bundle update github-pages`.
-gem "github-pages", group: :jekyll_plugins
-```
+# Deployment
 
-**_config.yml**
-```
-# Configure the remote_theme plugin with the gh-pages branch
-# or the specific tag
-remote_theme: aksakalli/jekyll-doc-theme@gh-pages   
-```
+Run `hugo`. It will generate a folder called public. You can use the files inside public folder for deployment. You should delete the public folder for each time when you are using `hugo` commend.
 
-### Theme Assets
+# Issues
 
-Files from your project will override any theme file with the same name.  For example, the most comment use case for this, would be to modify your sites theme or colors.   To do this, the following steps should be taken:
+If you have a question, please [open an issue](https://github.com/gurusabarish/hugo-profile/issues) for help and to help those who come after you. The more information you can provide, the better!
 
-1) Copy the contents of the `aksakalli/jekyll-doc-theme/asset/css/main.scss` to your own project (maintaining folder structure)
-2) Modify the variables you wish to use prior to the import statements, for example:
+# Contributing
 
-```
-// Bootstrap variable overrides
-$grid-gutter-width: 30px !default;
-$container-desktop: (900px + $grid-gutter-width) !default;
-$container-large-desktop: (900px + $grid-gutter-width) !default;
+Contributions, issues, and feature requests are welcome! For major changes, please open an issue first to discuss what you would like to change.
 
-@import // Original import statement
-  {% if site.bootwatch %}
-    "bootswatch/{{site.bootwatch | downcase}}/variables",
-  {% endif %}
+# License
 
-  "bootstrap",
+Licensed under [MIT](LICENSE)
 
-  {% if site.bootwatch %}
-    "bootswatch/{{site.bootwatch | downcase}}/bootswatch",
-  {% endif %}
+# 🤝 Support
 
-  "syntax-highlighting",
-  "typeahead",
-  "jekyll-doc-theme"
-;
+Give a ⭐️ or buy me a ~`coffee`~ tea if you like this project!
 
-// More custom overrides.
-```
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/Q5Q7BFFGU)
 
-3) Import or override any other theme styles after the standard imports
-
-## Projects using Jekyll Doc Theme
-
-* http://teavm.org/
-* https://ogb.stanford.edu/
-* https://griddb.org/
-* https://su2code.github.io/
-* https://contextmapper.org/
-* https://launchany.github.io/mvd-template/
-* https://knowit.github.io/kubernetes-workshop/
-* https://rec.danmuji.org/
-* https://nethesis.github.io/icaro/
-* http://ai.cs.ucl.ac.uk/
-* http://tizonia.org
-* https://lakka-switch.github.io/documentation/
-* https://cs.anu.edu.au/cybersec/issisp2018/
-* http://www.channotation.org/
-* http://nemo.apache.org/
-* https://csuf-acm.github.io/
-* https://extemporelang.github.io/
-* https://media-ed-online.github.io/intro-web-dev-2018spr/
-* https://midlevel.github.io/MLAPI/
-* https://pulp-platform.github.io/ariane/docs/home/
-* https://koopjs.github.io/
-* https://developer.apiture.com/
-* https://contextmapper.github.io/
-* https://www.bruttin.com/CosmosDbExplorer/
-* http://mosaic-lopow.github.io/dash7-ap-open-source-stack/
-* http://www.vstream.ml/
-* http://docs.fronthack.com/
-* https://repaircafeportsmouth.org.uk/
-* http://brotherskeeperkenya.com/
-* https://hschne.at/Fluentast/
-* https://zoe-analytics.eu/
-* https://uli.kmz-brno.cz/
-* https://lime.software/
-* https://weft.aka.farm
-* https://microros.github.io/
-* https://citystoriesucla.github.io/citystories-LA-docs
-* http://lessrt.org/
-* http://kivik.io/
-* https://www.iot-kit.nl/
-* http://justindietz.com/
-* https://universalsplitscreen.github.io/
-* https://docs.oneflowcloud.com/
-* https://actlist.silentsoft.org/
-* https://teevid.github.io
-* https://developer.ipums.org
-* https://osmpersia.github.io (right-to-left)
-* https://ecmlpkdd2019.org
-* https://idle.land
-* https://mqless.com
-* https://muict-seru.github.io/
-* https://www.invoice-x.org
-* https://www.devops.geek.nz
-
-## License
-
-Released under [the MIT license](LICENSE).
+<a href="https://www.buymeacoffee.com/gurusabarish" target="_blank" rel="noopener"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" height="40" width="145" alt="Buy Me A Coffee"></a>
