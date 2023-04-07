@@ -55,7 +55,6 @@ jobs:
           HUGO_ENV: production
         run: |
           hugo \
-            --minify \
             --gc \
             --buildFuture \
             --themesDir "themes" \
