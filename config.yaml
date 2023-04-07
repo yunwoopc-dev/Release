@@ -1,4 +1,4 @@
-baseURL: "https://yunwoopc-dev.github.io"
+baseURL: "https://yunwoopc-dev.github.io/Release"
 languageCode: "en-us"
 title: "Yunwoo Dev"
 theme: hugo-profile
