@@ -54,4 +54,4 @@ jobs:
           git config --global user.name "GitHub Actions"
           git add config.yaml
           git commit -m "config 수정"
-          git push
+          git push origin HEAD:dev
