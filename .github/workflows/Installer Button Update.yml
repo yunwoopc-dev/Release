@@ -1,0 +1,39 @@
+# Sample workflow for building and deploying a Hugo site to GitHub Pages
+name: 버전 Tag push 시 Config Update
+
+on:
+  # Runs on pushes targeting the default branch
+  push:
+    tags: "*"
+
+# Default to bash
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  # Build job
+  build:
+    runs-on: ubuntu-latest
+    env:
+      HUGO_VERSION: 0.108.0
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Setup Pages
+        id: pages
+        uses: actions/configure-pages@v3
+      - name: setup-yq
+        uses: mikefarah/yq@v4.33.2
+      - name: Change Download
+        run: |
+          yq -i '.params.hero.button.name = "Install v'{$SOURCE_TAG}'"' config.yaml
+          yq -i '.params.hero.button.url = "https://github.com/yunwoopc-dev/Release/releases/download/'{$SOURCE_TAG}'/Hub-'{$SOURCE_TAG}'.exe"' config.yaml
+          echo $SOURCE_TAG
+        env:
+          SOURCE_TAG: ${{ steps.branch_name.outputs.SOURCE_TAG }}
+      - name: Push Config
+        run: |
+          git add config.yaml
+          git commit -m "config 수정"
+          git push
