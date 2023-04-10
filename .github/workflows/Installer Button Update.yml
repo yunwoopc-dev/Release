@@ -34,19 +34,25 @@ jobs:
     env:
       HUGO_VERSION: 0.108.0
     steps:
+      - uses: little-core-labs/get-git-tag@v3.0.1
+        id: tagName
+        with:
+          tagRegex: "(\\d+.\\d+.\\d+)"  # Optional. Returns specified group text as tag name. Full tag string is returned if regex is not defined.
+          tagRegexGroup: 1 # Optional. Default is 1.
       - name: Checkout
         uses: actions/checkout@v3
       - name: Setup Pages
         id: pages
         uses: actions/configure-pages@v3
-      - name: Get current git tag
-        uses: devops-actions/action-get-tag@v1.0.1
       - name: setup-yq
         uses: mikefarah/yq@v4.33.2
+        
+      - name: Release File Found Test
+        run: wget "https://github.com/yunwoopc-dev/Release/releases/download/'${{ steps.tagName.outputs.tag }}'/Hub-'${{ steps.tagName.outputs.tag }}'.exe"
       - name: Change Download
         run: |
-          yq -i '.params.hero.button.name = "Install v'${{steps.tag.outputs.tag}}'"' config.yaml
-          yq -i '.params.hero.button.url = "https://github.com/yunwoopc-dev/Release/releases/download/'${{steps.tag.outputs.tag}}'/Hub-'${{steps.tag.outputs.tag}}'.exe"' config.yaml
+          yq -i '.params.hero.button.name = "Install v'${{ steps.tagName.outputs.tag }}'"' config.yaml
+          yq -i '.params.hero.button.url = "https://github.com/yunwoopc-dev/Release/releases/download/'${{ steps.tagName.outputs.tag }}'/Hub-'${{ steps.tagName.outputs.tag }}'.exe"' config.yaml
           echo $SOURCE_TAG
         env:
           SOURCE_TAG: ${{ steps.branch_name.outputs.SOURCE_TAG }}
@@ -65,8 +71,6 @@ jobs:
           git commit -m "config 수정"
           
       - name: Git Commit and Push
-        # You may pin to the exact commit or the version.
-        # uses: github-actions-x/commit@722d56b8968bf00ced78407bbe2ead81062d8baa
         uses: github-actions-x/commit@v2.9
         with:
           github-token: ${{ secrets.SOURCE_EDIT_TOKEN }}
