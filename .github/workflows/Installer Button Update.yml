@@ -50,14 +50,25 @@ jobs:
           echo $SOURCE_TAG
         env:
           SOURCE_TAG: ${{ steps.branch_name.outputs.SOURCE_TAG }}
+          
+      - name: GitHub Push
+        uses: ad-m/github-push-action@v0.6.0
+        with:
+          github_token: ${{ secrets.SOURCE_EDIT_TOKEN }}
+          branch: dev
+      
+      - name: Git Add, Commit
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add config.yaml
+          git commit -m "config 수정"
+          
       - name: Git Commit and Push
         # You may pin to the exact commit or the version.
         # uses: github-actions-x/commit@722d56b8968bf00ced78407bbe2ead81062d8baa
         uses: github-actions-x/commit@v2.9
         with:
-          # Github Token with commit access
           github-token: ${{ secrets.SOURCE_EDIT_TOKEN }}
-          # Override branch to push to
           push-branch: dev
-          # Specify commit message
           commit-message: "${{steps.tag.outputs.tag}} Download Button Updated"
