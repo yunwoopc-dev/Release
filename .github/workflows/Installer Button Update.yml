@@ -53,7 +53,10 @@ jobs:
           yq -i '.params.hero.button.url = "https://github.com/yunwoopc-dev/Release/releases/download/'${{ steps.tagName.outputs.tag }}'/Hub-'${{ steps.tagName.outputs.tag }}'.exe"' config.yaml
           
       - name: Git Checkout
-        run: git checkout main
+        run: |
+          git fetch
+          git checkout main
+          git pull
           
       - name: Git Commit and Push
         uses: github-actions-x/commit@v2.9
@@ -63,3 +66,4 @@ jobs:
           commit-message: "${{ steps.tagName.outputs.tag }}"
           email: "github-actions[bot]@users.noreply.github.com"
           name: "github-actions[bot]"
+          files: config.yaml
