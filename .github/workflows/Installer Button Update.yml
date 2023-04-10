@@ -39,19 +39,25 @@ jobs:
       - name: Setup Pages
         id: pages
         uses: actions/configure-pages@v3
+      - name: Get current git tag
+        uses: devops-actions/action-get-tag@v1.0.1
       - name: setup-yq
         uses: mikefarah/yq@v4.33.2
       - name: Change Download
         run: |
-          yq -i '.params.hero.button.name = "Install v'{$SOURCE_TAG}'"' config.yaml
-          yq -i '.params.hero.button.url = "https://github.com/yunwoopc-dev/Release/releases/download/'{$SOURCE_TAG}'/Hub-'{$SOURCE_TAG}'.exe"' config.yaml
+          yq -i '.params.hero.button.name = "Install v'${{steps.tag.outputs.tag}}'"' config.yaml
+          yq -i '.params.hero.button.url = "https://github.com/yunwoopc-dev/Release/releases/download/'${{steps.tag.outputs.tag}}'/Hub-'${{steps.tag.outputs.tag}}'.exe"' config.yaml
           echo $SOURCE_TAG
         env:
           SOURCE_TAG: ${{ steps.branch_name.outputs.SOURCE_TAG }}
-      - name: Push Config
-        run: |
-          git config --global user.email "actions@github.io"
-          git config --global user.name "GitHub Actions"
-          git add config.yaml
-          git commit -m "config 수정"
-          git push origin HEAD:dev
+      - name: Git Commit and Push
+        # You may pin to the exact commit or the version.
+        # uses: github-actions-x/commit@722d56b8968bf00ced78407bbe2ead81062d8baa
+        uses: github-actions-x/commit@v2.9
+        with:
+          # Github Token with commit access
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          # Override branch to push to
+          push-branch: dev
+          # Specify commit message
+          commit-message: "${{steps.tag.outputs.tag}} Download Button Updated"
