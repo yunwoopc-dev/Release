@@ -49,13 +49,12 @@ jobs:
         
       - name: Release File Found Test
         run: wget "https://github.com/yunwoopc-dev/Release/releases/download/'${{ steps.tagName.outputs.tag }}'/Hub-'${{ steps.tagName.outputs.tag }}'.exe"
+        
       - name: Change Download
         run: |
           yq -i '.params.hero.button.name = "Install v'${{ steps.tagName.outputs.tag }}'"' config.yaml
           yq -i '.params.hero.button.url = "https://github.com/yunwoopc-dev/Release/releases/download/'${{ steps.tagName.outputs.tag }}'/Hub-'${{ steps.tagName.outputs.tag }}'.exe"' config.yaml
-          echo $SOURCE_TAG
-        env:
-          SOURCE_TAG: ${{ steps.branch_name.outputs.SOURCE_TAG }}
+          echo ${{ steps.tagName.outputs.tag }}
           
       - name: GitHub Push
         uses: ad-m/github-push-action@v0.6.0
