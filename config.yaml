@@ -165,8 +165,8 @@ params:
 
     button:
       enable: true
-      name: "Install v0.0.10"
-      url: "https://github.com/yunwoopc-dev/Release/releases/download/0.0.10/Hub-0.0.10.exe"
+      name: "Install v0.0.11"
+      url: "https://github.com/yunwoopc-dev/Release/releases/download/0.0.11/Hub-0.0.11.exe"
       download: true
       newPage: false
     socialLinks:
