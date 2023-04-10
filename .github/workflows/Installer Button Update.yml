@@ -48,7 +48,7 @@ jobs:
         uses: mikefarah/yq@v4.33.2
         
       - name: Release File Found Test
-        run: wget "https://github.com/yunwoopc-dev/Release/releases/download/'${{ steps.tagName.outputs.tag }}'/Hub-'${{ steps.tagName.outputs.tag }}'.exe"
+        run: wget "https://github.com/yunwoopc-dev/Release/releases/download/${{ steps.tagName.outputs.tag }}/Hub-${{ steps.tagName.outputs.tag }}.exe"
         
       - name: Change Download
         run: |
