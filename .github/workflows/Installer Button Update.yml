@@ -51,23 +51,19 @@ jobs:
         run: |
           yq -i '.params.hero.button.name = "Install v'${{ steps.tagName.outputs.tag }}'"' config.yaml
           yq -i '.params.hero.button.url = "https://github.com/yunwoopc-dev/Release/releases/download/'${{ steps.tagName.outputs.tag }}'/Hub-'${{ steps.tagName.outputs.tag }}'.exe"' config.yaml
-          echo ${{ steps.tagName.outputs.tag }}
           
-      - name: GitHub Push
-        uses: ad-m/github-push-action@v0.6.0
-        with:
-          github_token: ${{ secrets.SOURCE_EDIT_TOKEN }}
-          branch: dev
-      
-      - name: Git Add, Commit
+      - name: Git Checkout
         run: |
-          git config --local user.email "github-actions[bot]@users.noreply.github.com"
-          git config --local user.name "github-actions[bot]"
-          git add config.yaml
-          git commit -m "${{ steps.tagName.outputs.tag }}"
+          git fetch
+          git checkout main
+          git pull
           
-      - name: GitHub Push
-        uses: ad-m/github-push-action@v0.6.0
+      - name: Git Commit and Push
+        uses: github-actions-x/commit@v2.9
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          branch: dev
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          push-branch: main
+          commit-message: "${{ steps.tagName.outputs.tag }}"
+          email: "github-actions[bot]@users.noreply.github.com"
+          name: "github-actions[bot]"
+          files: config.yaml
