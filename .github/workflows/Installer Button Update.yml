@@ -45,7 +45,7 @@ jobs:
         uses: mikefarah/yq@v4.33.2
         
       - name: Release File Found Test
-        run: wget --spider "https://yw-dev.synology.me:18081/repository/raw_test/hub_windows_app/Hub.'${{ steps.tagName.outputs.tag }}'.exe"
+        run: wget --spider "https://yw-dev.synology.me:18081/repository/raw_test/hub_windows_app/Hub.${{ steps.tagName.outputs.tag }}.exe"
         
       - name: Change Download
         run: |
