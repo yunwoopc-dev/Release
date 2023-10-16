@@ -165,8 +165,8 @@ params:
 
     button:
       enable: true
-      name: "Install v0.0.22"
-      url: "https://yw-dev.synology.me:18081/repository/raw_test/hub_windows_app/Hub.0.0.22.exe"
+      name: "Install v0.0.23"
+      url: "https://yw-dev.synology.me:18081/repository/raw_test/hub_windows_app/Hub.0.0.23.exe"
       download: true
       newPage: false
     socialLinks:
