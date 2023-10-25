@@ -1,0 +1,142 @@
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta content="width=device-width, initial-scale=1.0" name="viewport">
+	<title>다운로드 페이지</title>
+	
+	<script crossorigin="anonymous" src="https://kit.fontawesome.com/2a33a26d0c.js"></script>
+	<script>
+        const Compare_latest_version = (versionA, versionB) => {
+            let compareResult = true;
+
+            versionA = versionA.split('.');
+            versionB = versionB.split('.');
+
+            const length = Math.max(versionA.length, versionB.length);
+
+            for (let i = 0; i < length; i += 1) {
+                const a = versionA[i] ? parseInt(versionA[i], 10) : 0;
+                const b = versionB[i] ? parseInt(versionB[i], 10) : 0;
+                if (a > b) {
+                    compareResult = false;
+                    break;
+                }
+            }
+            return compareResult;
+        };
+
+        function load_button() {
+            let appcast_url = "https://yw-dev.synology.me:18081/repository/raw_test/hub_windows_app/appcast.xml";
+            let max_version = "0.0.0";
+            let download_url = "";
+
+            let result = fetch(appcast_url)
+                .then((response) => response.text())
+                .then((str) => new DOMParser().parseFromString(str, 'application/xml'))
+                .then((xml) => xml);
+
+            result.then(x => {
+                x.querySelectorAll('enclosure').forEach(y => {
+                    let version = y.getAttribute('sparkle:version');
+
+                    if (Compare_latest_version(max_version, version)) {
+                        max_version = version;
+                        download_url = y.getAttribute('url');
+                    }
+                });
+
+                if (max_version === "0.0.0") {
+                    console.error("최신 버전 정보를 찾지 못했습니다.");
+                    return;
+                }
+
+                let button = document.createElement('button');
+                button.id = "download"
+                button.className = "download-button"
+                button.type = 'button';
+                button.innerHTML = '<i class="fa-regular fa-circle-down"></i>' + max_version + ' 다운로드';
+
+                button.onclick = function () {
+                    window.open(download_url);
+                };
+
+                document.getElementById("button-container").appendChild(button);
+            });
+        }
+	</script>
+	<style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+
+        h1 {
+            font-size: 32px;
+            margin-bottom: 20px;
+        }
+
+        p {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .button-container {
+            display: flex;
+            gap: 20px;
+        }
+
+        .download-button {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        #mac-download {
+            background-color: #007AFF;
+            color: #ffffff;
+        }
+
+        #mac-download:hover {
+            background-color: #005DCB;
+        }
+
+        #windows-download {
+            background-color: #5EBD56;
+            color: #ffffff;
+        }
+
+        #windows-download:hover {
+            background-color: #4A9D40;
+        }
+
+        #download {
+            background-color: #5EBD56;
+            color: #ffffff;
+        }
+
+        #download:hover {
+            background-color: #4A9D40;
+        }
+	</style>
+</head>
+<body>
+<h1>Hub 다운로드</h1>
+<div class="button-container" id="button-container">
+</div>
+<script>
+    load_button();
+</script>
+
+
+</body>
+</html>
