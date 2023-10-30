@@ -47,7 +47,7 @@
                 button.id = "download";
                 button.className = "download-button";
                 button.type = "button";
-                button.innerHTML = '<i class="' + fontawesome_class + '">' + button_value + " (" + (architecture ?? "") + ")<br>" + max_version + "</i>";
+                button.innerHTML = '<i class="' + fontawesome_class + '"></i>' + button_value + " (" + (architecture ?? "") + ")<br>" + max_version;
 
                 if (max_version === "0.0.0") {
                     button.innerHTML = "최신 버전 정보를 찾지 못했습니다.";
