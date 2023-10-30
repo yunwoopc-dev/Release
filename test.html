@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Download Page</title>
+    <style>
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            right: 0;
+            background-color: white;
+            border: 1px solid #ccc;
+            z-index: 1;
+        }
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+        .dropdown-content a {
+            display: block;
+            padding: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        API URL: <input type="text" id="apiUrl" value="https://yw-dev.synology.me:18081/service/rest/v1/search/assets"><br>
+        Params: <input type="text" id="params" value="repository=yw-app"><br>
+        ID: <input type="text" id="id" value="dev-woong"><br>
+        Password: <input type="password" id="password" value="M2Q8o6GZ.6426TNMKP.fsXY8"><br>
+        <button onclick="fetchAllData()">Fetch Data</button>
+    </div>
+    
+    <div class="dropdown">
+        <span>Download: </span><span id="defaultVersion">Fetching...</span>
+        <span>▼</span>
+        <div class="dropdown-content" id="downloadLinks"></div>
+    </div>
+
+    <script>
+        async function fetchAllData(continuationToken = null) {
+            const apiUrl = document.getElementById('apiUrl').value;
+            const params = document.getElementById('params').value;
+            const id = document.getElementById('id').value;
+            const password = document.getElementById('password').value;
+
+            let url = `${apiUrl}?${params}`;
+            if (continuationToken) {
+                url += `&continuationToken=${continuationToken}`;
+            }
+
+            const response = await fetch(url, {
+                headers: {
+                    'Authorization': 'Basic ' + btoa(id + ":" + password)
+                }
+            });
+            const data = await response.json();
+            
+            const dropdown = document.getElementById('downloadLinks');
+            for (const item of data.items) {
+                const version = item.path.split('.')[1];
+                const link = document.createElement('a');
+                link.href = item.downloadUrl;
+                link.target = '_blank';
+                link.textContent = `Version: ${version}`;
+                dropdown.appendChild(link);
+            }
+            
+            if (data.continuationToken) {
+                await fetchAllData(data.continuationToken);
+            } else {
+                const latestVersion = data.items[0].path.split('.')[1];
+                document.getElementById('defaultVersion').textContent = `Latest Version: ${latestVersion}`;
+            }
+        }
+    </script>
+</body>
+</html>
