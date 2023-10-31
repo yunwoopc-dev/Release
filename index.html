@@ -26,7 +26,7 @@
             return compareResult;
         };
 
-        function load_button(element_id, button_value, appcast_url, fontawesome_class, architecture = null) {
+        function load_button(button_value, appcast_url, fontawesome_class, architecture = null) {
             let max_version = "0.0.0";
             let download_url = "";
 
@@ -59,7 +59,7 @@
                 };
 
                 document
-                    .getElementById(element_id)
+                    .getElementById("button-container")
                     .appendChild(button);
             });
         }
@@ -132,21 +132,22 @@
 
 <body>
     <h1>Hub 다운로드</h1>
-    <div class="button-container" id="hub-download">
+    <div class="button-container" id="button-container">
     </div>
     <script>
-        load_button("hub-download", "Windows", "https://yw-dev.synology.me:18081/repository/yw-app/hub_win/appcast.xml", "fa-brands fa-windows fa-xl", "x64");
-        load_button("hub-download", "MacOS", "https://yw-dev.synology.me:18081/repository/yw-app/hub_mac_silicon/appcast.xml", "fa-brands fa-apple fa-xl", "silicon");
+        load_button("Windows", "https://yw-dev.synology.me:18081/repository/yw-app/hub_win/appcast.xml", "fa-brands fa-windows fa", "x64");
+        load_button("MacOS", "https://yw-dev.synology.me:18081/repository/yw-app/hub_mac_silicon/appcast.xml", "fa-brands fa-apple", "silicon");
     </script>
-<br><br>
 
-    <h1>PC CAD 다운로드</h1>
-    <div class="button-container" id="cad-download">
+
+    <h1>Hub 다운로드</h1>
+    <div class="button-container" id="button-container">
     </div>
     <script>
-        load_button("cad-download", "Windows", "https://yw-dev.synology.me:18081/repository/yw-app/pc-cad_win/appcast.xml", "fa-brands fa-windows fa-xl", "x64");
-        load_button("cad-download", "MacOS", "https://yw-dev.synology.me:18081/repository/yw-app/pc-cad_mac_silicon/appcast.xml", "fa-brands fa-apple fa-xl", "silicon");
+        load_button("Windows", "https://yw-dev.synology.me:18081/repository/yw-app/hub_win/appcast.xml", "fa-brands fa-windows", "x64");
+        load_button("MacOS", "https://yw-dev.synology.me:18081/repository/yw-app/hub_mac_silicon/appcast.xml", "fa-brands fa-apple", "silicon");
     </script>
+
 </body>
 
 </html>
