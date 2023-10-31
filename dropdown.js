@@ -24,8 +24,8 @@ function createDropdown(divId, os, appcastUrl, fontawesome_class) {
 
     container.appendChild(dropdown);
 
-    fetch(appcastUrl)
-        .then((response) => response.text())
+    fetchWithRetry(appcastUrl)
+        .then((res) => res.text())
         .then((data) => {
             const parser = new DOMParser();
             const xmlDoc = parser.parseFromString(data, "application/xml");
@@ -72,6 +72,22 @@ function createDropdown(divId, os, appcastUrl, fontawesome_class) {
                 dropdownContent.appendChild(noVersionMsg);
             }
         });
+}
+
+async function fetchWithRetry(url, maxRetries = 3) {
+    try {
+        const response = await fetch(url);
+        if (!response.ok) {
+            throw new Error(`Request failed with status: ${response.status}`);
+        }
+        return response;
+    } catch (error) {
+        if (maxRetries <= 0) {
+            throw new Error("Max retries reached");
+        }
+        console.log(`Attempt failed. Retrying... (${maxRetries} retries left)`);
+        return fetchWithRetry(url, maxRetries - 1);
+    }
 }
 
 function compareVersions(a, b) {
