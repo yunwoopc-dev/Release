@@ -52,7 +52,7 @@ function createDropdown(divId, os, appcastUrl, fontawesome_class) {
                 if (i === 0) {
                     versionLink.innerHTML =
                         (fontawesome_class != null
-                            ? `<i class="${fontawesome_class}"></i>`
+                            ? `<i class="${fontawesome_class}"></i> `
                             : ``) + `${os} : ${version}`;
                     versionLink.href = link;
                 } else {
